@@ -1,0 +1,17 @@
+# Node
+node_modules/
+
+# Env
+.env
+
+# MacOS
+.DS_Store
+
+# Next
+client/.next/
+
+# Server uploads
+server/uploads/
+
+# Database
+server/prisma/dev.db

@@ -1,0 +1,77 @@
+{
+  "ErrorMessage": {
+    "invalidEmail": "⚠️ Email không đúng định dạng",
+    "required": "⚠️ Vui lòng nhập thông tin này",
+    "minmaxPassword": "🔐 Mật khẩu phải từ 6 đến 100 ký tự"
+  },
+  "Brand": {
+    "title": "🍽️ Nhà hàng Trần Nam",
+    "defaultTitle": "Trần Nam Restaurant"
+  },
+  "HomePage": {
+    "title": " Trang chủ",
+    "description": "✨ Trải nghiệm ẩm thực đẳng cấp với những món ăn được chế biến từ nguyên liệu tươi ngon mỗi ngày. Không gian ấm cúng, hương vị trọn vẹn cho mọi khoảnh khắc.",
+    "slogan": " Vị ngon trọn khoảnh khắc",
+    "h2": "🍴 Thực đơn nổi bật"
+  },
+  "DishDetail": {
+    "notFound": "❌ Không tìm thấy món ăn bạn yêu cầu"
+  },
+  "LoginGuest": {
+    "title": "🔑 Đăng nhập để gọi món",
+    "description": "👉 Vui lòng đăng nhập để bắt đầu đặt món và theo dõi đơn hàng của bạn"
+  },
+  "Login": {
+    "title": "🔐 Đăng nhập hệ thống",
+    "description": "👨‍💼 Khu vực dành cho quản trị và nhân viên",
+    "cardDescription": "📧 Nhập email và mật khẩu để truy cập hệ thống quản lý",
+    "buttonLogin": "🚀 Đăng nhập",
+    "loginWithGoogle": "🔑 Tiếp tục với Google"
+  },
+  "GuestMenu": {
+    "title": " Thực đơn",
+    "description": "🍽️ Khám phá và lựa chọn món ăn yêu thích"
+  },
+  "ManageAccounts": {
+    "title": "👥 Quản lý tài khoản",
+    "description": "🛠️ Thêm, chỉnh sửa và phân quyền tài khoản nhân viên"
+  },
+  "Dashboard": {
+    "title": "📊 Bảng điều khiển",
+    "description": "📈 Theo dõi và phân tích hiệu suất kinh doanh theo thời gian thực"
+  },
+  "Dishes": {
+    "title": "🍜 Quản lý món ăn",
+    "description": "📝 Thêm mới, cập nhật và quản lý danh sách món ăn"
+  },
+  "Orders": {
+    "title": "📦 Quản lý đơn hàng",
+    "description": "🧾 Theo dõi và xử lý các đơn hàng trong hệ thống"
+  },
+  "Setting": {
+    "title": "⚙️ Cài đặt",
+    "description": "🔧 Quản lý thông tin tài khoản và tùy chỉnh hệ thống"
+  },
+  "Tables": {
+    "title": "🪑 Quản lý bàn ăn",
+    "description": "📍 Theo dõi trạng thái và điều phối bàn phục vụ"
+  },
+  "SwitchLanguage": {
+    "title": "🌍 Ngôn ngữ",
+    "en": "🇺🇸 English",
+    "vi": "🇻🇳 Tiếng Việt"
+  },
+  "NavItem": {
+    "home": " Trang chủ",
+    "menu": "📖 Thực đơn",
+    "orders": "📦 Đơn hàng",
+    "login": "🔐 Đăng nhập",
+    "logout": " Đăng xuất",
+    "manage": " Quản lý",
+    "logoutDialog": {
+      "logoutQuestion": "⚠️ Bạn có chắc chắn muốn đăng xuất?",
+      "logoutCancel": "❌ Hủy",
+      "logoutConfirm": "🚪 Việc đăng xuất có thể làm gián đoạn đơn hàng hiện tại của bạn"
+    }
+  }
+}
