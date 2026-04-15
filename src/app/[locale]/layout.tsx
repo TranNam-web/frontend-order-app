@@ -1,4 +1,5 @@
 import { Inter as FontSans } from 'next/font/google'
+import SnowEffect from '@/components/SnowEffect'
 import './globals.css'
 import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/toaster'
@@ -18,15 +19,18 @@ import GoogleTag from '@/components/google-tag'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 
+// 👇 THÊM DÒNG NÀY
+import ChatBox from '@/components/ui/ChatBox'
+
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans'
 })
+
 export async function generateMetadata(props: {
   params: Promise<{ locale: Locale }>
 }) {
   const params = await props.params
-
   const { locale } = params
 
   const t = await getTranslations({ locale, namespace: 'Brand' })
@@ -38,9 +42,6 @@ export async function generateMetadata(props: {
     openGraph: {
       ...baseOpenGraph
     }
-    // other: {
-    //   'google-site-verification': 'KKr5Sgn6rrXntMUp1nDIoQR7mJQujE4BExrlgcFvGTg'
-    // }
   }
 }
 
@@ -55,17 +56,16 @@ export default async function RootLayout(
   }>
 ) {
   const params = await props.params
-
   const { locale } = params
-
   const { children } = props
 
-  // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as any)) {
     notFound()
   }
+
   setRequestLocale(locale)
   const messages = await getMessages()
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
@@ -75,6 +75,7 @@ export default async function RootLayout(
         )}
       >
         <NextTopLoader showSpinner={false} color='hsl(var(--foreground))' />
+
         <NextIntlClientProvider messages={messages}>
           <AppProvider>
             <ThemeProvider
@@ -83,12 +84,19 @@ export default async function RootLayout(
               enableSystem
               disableTransitionOnChange
             >
+              <SnowEffect />
+
               {children}
+
+              {/* 👇 CHAT AI */}
+              <ChatBox />
+
               <Footer />
               <Toaster />
             </ThemeProvider>
           </AppProvider>
         </NextIntlClientProvider>
+
         <GoogleTag />
       </body>
     </html>

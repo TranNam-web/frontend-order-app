@@ -11,15 +11,23 @@ import {
   UpdateOrderResType
 } from '@/schemaValidations/order.schema'
 import Image from 'next/image'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export default function OrdersCart() {
   const { data, refetch } = useGuestGetOrderListQuery()
-  const orders = useMemo(() => data?.payload.data ?? [], [data])
+
+  // ✅ fix payload lỗi TS
+  const orders = useMemo(() => (data as any)?.payload?.data ?? [], [data])
+
   const socket = useAppStore((state) => state.socket)
+
+  // ✅ payment type
+  const [paymentType, setPaymentType] = useState<'CASH' | 'BANK_QR'>('CASH')
+
+  // ✅ tính tiền
   const { waitingForPaying, paid } = useMemo(() => {
     return orders.reduce(
-      (result, order) => {
+      (result: any, order: any) => {
         if (
           order.status === OrderStatus.Delivered ||
           order.status === OrderStatus.Processing ||
@@ -40,7 +48,8 @@ export default function OrdersCart() {
             ...result,
             paid: {
               price:
-                result.paid.price + order.dishSnapshot.price * order.quantity,
+                result.paid.price +
+                order.dishSnapshot.price * order.quantity,
               quantity: result.paid.quantity + order.quantity
             }
           }
@@ -60,28 +69,19 @@ export default function OrdersCart() {
     )
   }, [orders])
 
+  // ✅ lấy số bàn
+  const tableNumber = orders[0]?.guest?.tableNumber || ''
+
   useEffect(() => {
-    if (socket?.connected) {
-      onConnect()
-    }
-
-    function onConnect() {
-      console.log(socket?.id)
-    }
-
-    function onDisconnect() {
-      console.log('disconnect')
-    }
-
     function onUpdateOrder(data: UpdateOrderResType['data']) {
       const {
         dishSnapshot: { name },
         quantity
       } = data
       toast({
-        description: `Món ${name} (SL: ${quantity}) vừa được cập nhật sang trạng thái "${getVietnameseOrderStatus(
+        description: `Món ${name} (SL: ${quantity}) → ${getVietnameseOrderStatus(
           data.status
-        )}"`
+        )}`
       })
       refetch()
     }
@@ -89,65 +89,75 @@ export default function OrdersCart() {
     function onPayment(data: PayGuestOrdersResType['data']) {
       const { guest } = data[0]
       toast({
-        description: `${guest?.name} tại bàn ${guest?.tableNumber} thanh toán thành công ${data.length} đơn`
+        description: `${guest?.name} bàn ${guest?.tableNumber} đã thanh toán`
       })
       refetch()
     }
 
     socket?.on('update-order', onUpdateOrder)
     socket?.on('payment', onPayment)
-    socket?.on('connect', onConnect)
-    socket?.on('disconnect', onDisconnect)
 
     return () => {
-      socket?.off('connect', onConnect)
-      socket?.off('disconnect', onDisconnect)
       socket?.off('update-order', onUpdateOrder)
       socket?.off('payment', onPayment)
     }
   }, [refetch, socket])
+
   return (
     <>
-      {orders.map((order, index) => (
+      {/* LIST ORDER */}
+      {orders.map((order: any, index: number) => (
         <div key={order.id} className='flex gap-4'>
           <div className='text-sm font-semibold'>{index + 1}</div>
-          <div className='flex-shrink-0 relative'>
-            <Image
-              src={order.dishSnapshot.image}
-              alt={order.dishSnapshot.name}
-              height={100}
-              width={100}
-              quality={100}
-              className='object-cover w-[80px] h-[80px] rounded-md'
-            />
-          </div>
-          <div className='space-y-1'>
-            <h3 className='text-sm'>{order.dishSnapshot.name}</h3>
-            <div className='text-xs font-semibold'>
-              {formatCurrency(order.dishSnapshot.price)} x{' '}
-              <Badge className='px-1'>{order.quantity}</Badge>
+
+          <Image
+            src={order.dishSnapshot.image}
+            alt={order.dishSnapshot.name}
+            width={80}
+            height={80}
+            className='rounded-md'
+          />
+
+          <div>
+            <h3>{order.dishSnapshot.name}</h3>
+            <div>
+              {formatCurrency(order.dishSnapshot.price)} x {order.quantity}
             </div>
           </div>
-          <div className='flex-shrink-0 ml-auto flex justify-center items-center'>
-            <Badge variant={'outline'}>
-              {getVietnameseOrderStatus(order.status)}
-            </Badge>
+
+          <div className='ml-auto'>
+            <Badge>{getVietnameseOrderStatus(order.status)}</Badge>
           </div>
         </div>
       ))}
-      {paid.quantity !== 0 && (
-        <div className='sticky bottom-0 '>
-          <div className='w-full flex space-x-4 text-xl font-semibold'>
-            <span>Đơn đã thanh toán · {paid.quantity} món</span>
-            <span>{formatCurrency(paid.price)}</span>
-          </div>
+
+      {/* CHỌN THANH TOÁN */}
+      <div className="mt-4">
+        <select
+          className="border p-2 rounded w-full"
+          value={paymentType}
+          onChange={(e) =>
+            setPaymentType(e.target.value as 'CASH' | 'BANK_QR')
+          }
+        >
+          <option value="CASH">Tiền mặt</option>
+          <option value="BANK_QR">QR</option>
+        </select>
+      </div>
+
+      {/* QR CODE */}
+      {paymentType === 'BANK_QR' && (
+        <div className="text-center mt-4">
+          <img
+            src={`https://img.vietqr.io/image/TPB-00000617058-compact.png?amount=${waitingForPaying.price}&addInfo=Ban${tableNumber}`}
+            className="mx-auto w-[200px]"
+          />
         </div>
       )}
-      <div className='sticky bottom-0 '>
-        <div className='w-full flex space-x-4 text-xl font-semibold'>
-          <span>Đơn chưa thanh toán · {waitingForPaying.quantity} món</span>
-          <span>{formatCurrency(waitingForPaying.price)}</span>
-        </div>
+
+      {/* TOTAL */}
+      <div className="mt-4 font-bold">
+        Chưa thanh toán: {formatCurrency(waitingForPaying.price)}
       </div>
     </>
   )
