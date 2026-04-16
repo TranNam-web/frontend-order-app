@@ -17,7 +17,7 @@ export default function OrdersCart() {
   const { data, refetch } = useGuestGetOrderListQuery()
 
   // ✅ fix payload lỗi TS
-  const orders = useMemo(() => (data as any)?.payload?.data ?? [], [data])
+  const orders = (data as any)?.payload?.data ?? []
 
   const socket = useAppStore((state) => state.socket)
 
