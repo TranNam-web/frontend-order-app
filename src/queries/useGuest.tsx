@@ -22,8 +22,24 @@ export const useGuestGetOrderListQuery = () => {
   return useQuery({
     queryFn: guestApiRequest.getOrderList,
     queryKey: ['guest-orders'],
-    refetchInterval: 3000, // 🔥 thêm dòng này
-    refetchIntervalInBackground: true, // 🔥 thêm luôn
-    staleTime: 0 // 🔥 đảm bảo luôn fetch mới
+    refetchInterval: 3000,
+    refetchIntervalInBackground: true,
+    staleTime: 0,
+
+    // 🔥 QUAN TRỌNG NHẤT
+    notifyOnChangeProps: 'all',
+
+    // 🔥 ÉP React Query luôn coi là data mới
+    select: (data) => {
+      return {
+        ...data,
+        payload: {
+          ...data.payload,
+          data: data.payload.data.map((item: any) => ({
+            ...item
+          }))
+        }
+      }
+    }
   })
 }
