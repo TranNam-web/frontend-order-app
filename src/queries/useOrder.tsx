@@ -16,14 +16,13 @@ export const useUpdateOrderMutation = () => {
     }) => orderApiRequest.updateOrder(orderId, body)
   })
 }
-
 export const useGetOrderListQuery = (queryParams: GetOrdersQueryParamsType) => {
   return useQuery({
     queryFn: () => orderApiRequest.getOrderList(queryParams),
-    queryKey: ['orders', queryParams],
-    refetchInterval: 3000 // 🔥 thêm dòng này
+    queryKey: ['orders'],
+    refetchInterval: 3000
   })
-}
+}git add .
 export const useGetOrderDetailQuery = ({
   id,
   enabled
