@@ -4,22 +4,26 @@ import type { NextConfig } from 'next'
 
 const withNextIntl = createNextIntlPlugin()
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        hostname: 'localhost',
-        pathname: '/**'
-      },
-      {
-        hostname: 'api-bigboy.duthanhduoc.com',
-        pathname: '/**'
-      },
-      {
-        hostname: 'via.placeholder.com',
-        pathname: '/**'
-      }
-    ]
-  }
+ images: {
+  remotePatterns: [
+    {
+      hostname: 'localhost',
+      pathname: '/**'
+    },
+    {
+      hostname: 'api-bigboy.duthanhduoc.com',
+      pathname: '/**'
+    },
+    {
+      hostname: 'via.placeholder.com',
+      pathname: '/**'
+    },
+    {
+      hostname: 'api.namqrcode.io.vn',   // 👈 THÊM DÒNG NÀY
+      pathname: '/**'
+    }
+  ]
+}
 }
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true'
