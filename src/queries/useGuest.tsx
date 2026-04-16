@@ -18,10 +18,12 @@ export const useGuestOrderMutation = () => {
     mutationFn: guestApiRequest.order
   })
 }
-
 export const useGuestGetOrderListQuery = () => {
   return useQuery({
     queryFn: guestApiRequest.getOrderList,
-    queryKey: ['guest-orders']
+    queryKey: ['guest-orders'],
+    refetchInterval: 3000, // 🔥 thêm dòng này
+    refetchIntervalInBackground: true, // 🔥 thêm luôn
+    staleTime: 0 // 🔥 đảm bảo luôn fetch mới
   })
 }
