@@ -1,6 +1,5 @@
 import Script from 'next/script'
 import { Fragment } from 'react'
-
 export default function GoogleTag() {
   return (
     <Fragment>

@@ -41,7 +41,7 @@ export default function ChatBox() {
     setMessages(newMessages)
 
     try {
-      const res = await fetch('http://localhost:4000/guest/chat', {
+     const res = await fetch('https://frontend-order-app.vercel.app/vi', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
