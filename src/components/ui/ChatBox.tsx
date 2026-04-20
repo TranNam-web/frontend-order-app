@@ -41,7 +41,7 @@ export default function ChatBox() {
     setMessages(newMessages)
 
     try {
-     const res = await fetch('https://frontend-order-app.vercel.app/vi', {
+    const res = await fetch('https://api.namqrcode.io.vn/guest/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
