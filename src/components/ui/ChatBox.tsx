@@ -30,6 +30,7 @@ export default function ChatBox() {
     }
   }, [open])
 
+  // 🚀 FAKE CHAT (KHÔNG API)
   const sendMessage = async (customMessage?: string) => {
     const msg = customMessage || input
     if (!msg.trim()) return
@@ -40,42 +41,49 @@ export default function ChatBox() {
     const newMessages = [...messages, { role: 'user', content: msg }]
     setMessages(newMessages)
 
-    try {
-    const res = await fetch('https://api.namqrcode.io.vn/guest/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: msg,
-          history: newMessages
-        })
-      })
+    setTimeout(() => {
+      const text = msg.toLowerCase()
+      let reply = 'Mình chưa hiểu 😅'
 
-      const data = await res.json()
+      if (text.includes('rẻ')) {
+        reply = '💸 Món rẻ: Cá viên chiên, nước cam chỉ từ 5k!'
+      } else if (text.includes('ngon')) {
+        reply = '🔥 Món hot: Cá viên chiên & chè hoa quả cực ngon 😋'
+      } else if (text.includes('uống')) {
+        reply = '🥤 Có coca, nước cam, trà tắc mát lạnh nha!'
+      } else if (text.includes('hello') || text.includes('hi')) {
+        reply = 'Xin chào 👋 bạn muốn ăn gì hôm nay?'
+      } else {
+        reply = `Mình hiểu bạn đang hỏi: "${msg}" 🤔\nBạn có thể hỏi "món rẻ", "đồ uống", "món ngon" nhé!`
+      }
 
       setMessages([
         ...newMessages,
-        { role: 'assistant', content: data.reply }
+        { role: 'assistant', content: reply }
       ])
-    } catch (err) {
-      setMessages([
-        ...newMessages,
-        { role: 'assistant', content: 'Lỗi server 😢' }
-      ])
-    } finally {
+
       setLoading(false)
-    }
+    }, 800)
   }
 
   if (!isHome) return null
 
   return (
-    <div className='fixed bottom-5 right-6 md:right-12 z-50'>
+    <div className='fixed bottom-10 right-6 md:right-12 z-[9999] flex flex-col items-end gap-3'>
 
-      {/* Nút mở */}
+      {/* 📞 Nút gọi */}
+      <a
+        href="tel:0865063204"
+        className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg animate-bounce"
+      >
+        📞
+      </a>
+
+      {/* 💬 Nút chat */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg transition hover:scale-105'
+          className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg transform hover:scale-110 animate-pulse'
         >
           💬 Chat
         </button>
@@ -86,86 +94,38 @@ export default function ChatBox() {
         <div className='w-80 h-[420px] bg-slate-900 text-white rounded-2xl shadow-2xl flex flex-col border border-slate-700'>
 
           {/* Header */}
-          <div className='bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-3 flex justify-between items-center rounded-t-2xl'>
+          <div className='bg-gradient-to-r from-blue-500 to-indigo-600 p-3 flex justify-between items-center rounded-t-2xl'>
             <span className='font-semibold'>🤖 Trợ lý AI</span>
             <button onClick={() => setOpen(false)}>✖</button>
           </div>
 
           {/* Nội dung */}
-          <div className='flex-1 p-3 overflow-y-auto space-y-3'>
+          <div className='flex-1 p-3 overflow-y-auto space-y-3 whitespace-pre-line'>
 
             {/* Gợi ý */}
             {messages.length <= 1 && (
               <div className='flex gap-2 flex-wrap'>
-                <button
-                  onClick={() => sendMessage('món nào ngon')}
-                  className='bg-slate-700 px-2 py-1 rounded text-xs hover:bg-slate-600'
-                >
-                  Món ngon
-                </button>
-                <button
-                  onClick={() => sendMessage('có gì rẻ không')}
-                  className='bg-slate-700 px-2 py-1 rounded text-xs hover:bg-slate-600'
-                >
-                  Món rẻ
-                </button>
-                <button
-                  onClick={() => sendMessage('có đồ uống gì')}
-                  className='bg-slate-700 px-2 py-1 rounded text-xs hover:bg-slate-600'
-                >
-                  Đồ uống
-                </button>
+                <button onClick={() => sendMessage('món rẻ')} className='bg-slate-700 px-2 py-1 rounded text-xs'>Món rẻ</button>
+                <button onClick={() => sendMessage('món ngon')} className='bg-slate-700 px-2 py-1 rounded text-xs'>Món ngon</button>
+                <button onClick={() => sendMessage('đồ uống')} className='bg-slate-700 px-2 py-1 rounded text-xs'>Đồ uống</button>
               </div>
             )}
 
             {/* Messages */}
             {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`flex items-end gap-2 ${
-                  msg.role === 'user' ? 'justify-end' : 'justify-start'
-                }`}
-              >
-                {/* Avatar AI */}
-                {msg.role !== 'user' && (
-                  <div className='w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white text-xs'>
-                    🤖
-                  </div>
-                )}
-
-                {/* Message */}
-                <div
-                  className={`px-4 py-2 rounded-2xl max-w-[75%] text-sm ${
-                    msg.role === 'user'
-                      ? 'bg-blue-500 text-white rounded-br-none'
-                      : 'bg-slate-700 text-gray-200 rounded-bl-none'
-                  }`}
-                >
+              <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`px-4 py-2 rounded-2xl max-w-[75%] text-sm ${
+                  msg.role === 'user'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-slate-700 text-gray-200'
+                }`}>
                   {msg.content}
                 </div>
-
-                {/* Avatar user */}
-                {msg.role === 'user' && (
-                  <div className='w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs'>
-                    U
-                  </div>
-                )}
               </div>
             ))}
 
-            {/* Typing */}
-            {loading && (
-              <div className='flex items-center gap-2'>
-                <div className='w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white text-xs'>
-                  🤖
-                </div>
-                <div className='flex gap-1'>
-                  <span className='w-2 h-2 bg-gray-400 rounded-full animate-bounce'></span>
-                  <span className='w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-150'></span>
-                  <span className='w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-300'></span>
-                </div>
-              </div>
-            )}
+            {/* Loading */}
+            {loading && <div className='text-gray-400 text-sm'>Đang trả lời...</div>}
 
             <div ref={chatEndRef} />
           </div>
@@ -181,7 +141,7 @@ export default function ChatBox() {
             />
             <button
               onClick={() => sendMessage()}
-              className='ml-2 bg-blue-500 hover:bg-blue-600 text-white px-3 rounded-lg text-sm'
+              className='ml-2 bg-blue-500 px-3 rounded-lg'
             >
               ➤
             </button>
