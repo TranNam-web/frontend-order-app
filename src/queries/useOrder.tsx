@@ -19,7 +19,7 @@ export const useUpdateOrderMutation = () => {
 export const useGetOrderListQuery = (queryParams: GetOrdersQueryParamsType) => {
   return useQuery({
     queryFn: () => orderApiRequest.getOrderList(queryParams),
-    queryKey: ['orders'],
+   queryKey: ['orders', queryParams],
     refetchInterval: 3000
   })
 }
