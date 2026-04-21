@@ -46,7 +46,7 @@ export default function ChatBox() {
       let reply = 'Mình chưa hiểu 😅'
 
       if (text.includes('rẻ')) {
-        reply = '💸 Món rẻ: Cá viên chiên, nước cam chỉ từ 5k!'
+        reply = '💸 Món rẻ: Cá viên chiên, nước cam chỉ từ 5k- 6k!'
       } else if (text.includes('ngon')) {
         reply = '🔥 Món hot: Cá viên chiên & chè hoa quả cực ngon 😋'
       } else if (text.includes('uống')) {
