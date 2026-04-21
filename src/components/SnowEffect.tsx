@@ -22,7 +22,7 @@ export default function SnowEffect() {
           cursor: 'pointer'
         }}
       >
-        ❄️
+        ''
       </button>
 
       {showSnow && (
