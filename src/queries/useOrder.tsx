@@ -22,7 +22,7 @@ export const useGetOrderListQuery = (queryParams: GetOrdersQueryParamsType) => {
     queryKey: ['orders'],
     refetchInterval: 3000
   })
-}git add .
+}
 export const useGetOrderDetailQuery = ({
   id,
   enabled
