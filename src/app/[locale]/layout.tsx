@@ -27,13 +27,6 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-/**
- * 🔥 FIX MOBILE CO GIÃN (QUAN TRỌNG)
- */
-export const metadata = {
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1'
-}
-
 export async function generateMetadata(props: {
   params: Promise<{ locale: Locale }>
 }) {
@@ -41,6 +34,7 @@ export async function generateMetadata(props: {
   const { locale } = params
 
   const t = await getTranslations({ locale, namespace: 'Brand' })
+
   return {
     title: {
       template: `%s | ${t('title')}`,
@@ -48,6 +42,13 @@ export async function generateMetadata(props: {
     },
     openGraph: {
       ...baseOpenGraph
+    },
+
+    // 🔥 FIX MOBILE VIEWPORT (ĐÚNG CHUẨN)
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+      maximumScale: 1
     }
   }
 }
@@ -81,7 +82,7 @@ export default async function RootLayout(
           fontSans.variable
         )}
       >
-        {/* 🔥 KHÓA KHUNG MOBILE */}
+        {/* 🔥 KHÓA KHUNG MOBILE (FIX CO GIÃN) */}
         <div className="w-full max-w-[420px] mx-auto min-h-screen overflow-x-hidden">
 
           <NextTopLoader showSpinner={false} color="hsl(var(--foreground))" />
