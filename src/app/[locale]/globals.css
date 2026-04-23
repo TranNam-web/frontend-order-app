@@ -18,7 +18,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* 🔥 PRIMARY – Xanh SaaS cao cấp */
+    /* 🔥 PRIMARY */
     --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
 
@@ -30,7 +30,7 @@
     --muted: 210 40% 94%;
     --muted-foreground: 215 16% 47%;
 
-    /* 🎯 ACCENT – xanh ngọc nổi */
+    /* 🎯 ACCENT */
     --accent: 173 80% 40%;
     --accent-foreground: 0 0% 100%;
 
@@ -43,11 +43,11 @@
     --input: 214 32% 91%;
     --ring: 221 83% 53%;
 
-    /* ✨ Radius bo góc hiện đại */
+    /* ✨ Radius */
     --radius: 0.9rem;
   }
 
-  /* 🌙 DARK MODE – PROMAX */
+  /* 🌙 DARK MODE */
   .dark {
     --background: 222 47% 11%;
     --foreground: 210 40% 98%;
@@ -85,6 +85,7 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box; /* 🔥 fix layout */
   }
 
   body {
@@ -93,15 +94,15 @@
 }
 
 /* ===============================
-   📊 CHART COLORS – PRO LEVEL
+   📊 CHART COLORS
    =============================== */
 @layer base {
   :root {
-    --chart-1: 221 83% 53%; /* Primary */
-    --chart-2: 173 80% 40%; /* Accent */
-    --chart-3: 43 96% 56%;  /* Yellow */
-    --chart-4: 280 65% 60%; /* Purple */
-    --chart-5: 0 84% 60%;   /* Red */
+    --chart-1: 221 83% 53%;
+    --chart-2: 173 80% 40%;
+    --chart-3: 43 96% 56%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 0 84% 60%;
   }
 
   .dark {
@@ -112,7 +113,33 @@
     --chart-5: 0 84% 65%;
   }
 }
+
+/* ===============================
+   📱 MOBILE FIX (QUAN TRỌNG NHẤT)
+   =============================== */
+
+/* ❌ chặn tràn ngang */
 html, body {
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
+}
+
+/* 🔥 FIX AUTO ZOOM (CHÍNH) */
+input,
+textarea,
+select {
+  font-size: 16px !important;
+}
+
+/* 🔥 FIX ẢNH KHÔNG BỊ GIÃN */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 🔥 FIX TOUCH */
+button {
+  touch-action: manipulation;
 }
