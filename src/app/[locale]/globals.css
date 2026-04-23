@@ -1,114 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* ===============================
-   🌈 DESIGN TOKENS – PROMAX
-   =============================== */
-
-@layer base {
-  :root {
-    /* 🌤 Background & Text */
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-
-    /* 🔥 PRIMARY – Xanh SaaS cao cấp */
-    --primary: 221 83% 53%;
-    --primary-foreground: 0 0% 100%;
-
-    /* 🧊 SECONDARY */
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-
-    /* 💤 MUTED */
-    --muted: 210 40% 94%;
-    --muted-foreground: 215 16% 47%;
-
-    /* 🎯 ACCENT – xanh ngọc nổi */
-    --accent: 173 80% 40%;
-    --accent-foreground: 0 0% 100%;
-
-    /* ❌ ERROR */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    /* 🧱 UI */
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
-
-    /* ✨ Radius bo góc hiện đại */
-    --radius: 0.9rem;
-  }
-
-  /* 🌙 DARK MODE – PROMAX */
-  .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-
-    --card: 222 47% 13%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222 47% 13%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 221 83% 63%;
-    --primary-foreground: 222 47% 11%;
-
-    --secondary: 217 33% 18%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 33% 18%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 173 80% 45%;
-    --accent-foreground: 222 47% 11%;
-
-    --destructive: 0 63% 40%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 217 33% 18%;
-    --input: 217 33% 18%;
-    --ring: 221 83% 63%;
-  }
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  touch-action: manipulation;
 }
 
-/* ===============================
-   🧱 BASE STYLE
-   =============================== */
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground antialiased;
-  }
+/* 🔥 FIX MOBILE TEXT AUTO ZOOM */
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
-/* ===============================
-   📊 CHART COLORS – PRO LEVEL
-   =============================== */
-@layer base {
-  :root {
-    --chart-1: 221 83% 53%; /* Primary */
-    --chart-2: 173 80% 40%; /* Accent */
-    --chart-3: 43 96% 56%;  /* Yellow */
-    --chart-4: 280 65% 60%; /* Purple */
-    --chart-5: 0 84% 60%;   /* Red */
-  }
+/* 🔥 FIX IMG KHÔNG BỊ GIÃN */
+img {
+  max-width: 100%;
+  height: auto;
+}
 
-  .dark {
-    --chart-1: 221 83% 63%;
-    --chart-2: 173 80% 45%;
-    --chart-3: 43 96% 60%;
-    --chart-4: 280 65% 65%;
-    --chart-5: 0 84% 65%;
-  }
+/* 🔥 FIX FLEX BỊ PHỒNG */
+* {
+  box-sizing: border-box;
 }

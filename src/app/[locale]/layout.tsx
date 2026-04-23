@@ -19,13 +19,20 @@ import GoogleTag from '@/components/google-tag'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 
-// 👇 THÊM DÒNG NÀY
+// 👇 Chat AI
 import ChatBox from '@/components/ui/ChatBox'
 
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans'
 })
+
+/**
+ * 🔥 FIX MOBILE CO GIÃN (QUAN TRỌNG)
+ */
+export const metadata = {
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1'
+}
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: Locale }>
@@ -74,28 +81,32 @@ export default async function RootLayout(
           fontSans.variable
         )}
       >
-        <NextTopLoader showSpinner={false} color='hsl(var(--foreground))' />
+        {/* 🔥 KHÓA KHUNG MOBILE */}
+        <div className="w-full max-w-[420px] mx-auto min-h-screen overflow-x-hidden">
 
-        <NextIntlClientProvider messages={messages}>
-          <AppProvider>
-            <ThemeProvider
-              attribute='class'
-              defaultTheme='system'
-              enableSystem
-              disableTransitionOnChange
-            >
-              <SnowEffect />
+          <NextTopLoader showSpinner={false} color="hsl(var(--foreground))" />
 
-              {children}
+          <NextIntlClientProvider messages={messages}>
+            <AppProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <SnowEffect />
 
-              {/* 👇 CHAT AI */}
-              <ChatBox />
+                {children}
 
-              <Footer />
-              <Toaster />
-            </ThemeProvider>
-          </AppProvider>
-        </NextIntlClientProvider>
+                {/* Chat AI */}
+                <ChatBox />
+
+                <Footer />
+                <Toaster />
+              </ThemeProvider>
+            </AppProvider>
+          </NextIntlClientProvider>
+        </div>
 
         <GoogleTag />
       </body>
