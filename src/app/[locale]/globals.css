@@ -111,25 +111,8 @@
     --chart-4: 280 65% 65%;
     --chart-5: 0 84% 65%;
   }
-}html, body {
-  width: 100%;
-  max-width: 100%;
+}
+html, body {
   overflow-x: hidden;
-  touch-action: manipulation;
-}
-
-/* 🔥 FIX MOBILE TEXT AUTO ZOOM */
-html {
   -webkit-text-size-adjust: 100%;
-}
-
-/* 🔥 FIX IMG KHÔNG BỊ GIÃN */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* 🔥 FIX FLEX BỊ PHỒNG */
-* {
-  box-sizing: border-box;
 }

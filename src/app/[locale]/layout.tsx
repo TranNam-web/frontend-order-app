@@ -19,7 +19,7 @@ import GoogleTag from '@/components/google-tag'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 
-// 👇 THÊM DÒNG NÀY
+// Chat AI
 import ChatBox from '@/components/ui/ChatBox'
 
 const fontSans = FontSans({
@@ -27,6 +27,10 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
+/**
+ * 🔥 FIX MOBILE KHÔNG CHO ZOOM
+ * (KHÔNG ẢNH HƯỞNG ADMIN DESKTOP)
+ */
 export async function generateMetadata(props: {
   params: Promise<{ locale: Locale }>
 }) {
@@ -34,6 +38,7 @@ export async function generateMetadata(props: {
   const { locale } = params
 
   const t = await getTranslations({ locale, namespace: 'Brand' })
+
   return {
     title: {
       template: `%s | ${t('title')}`,
@@ -41,6 +46,14 @@ export async function generateMetadata(props: {
     },
     openGraph: {
       ...baseOpenGraph
+    },
+
+    // 🔥 CHỈ FIX ZOOM (KHÔNG BÓ WIDTH)
+    viewport: {
+      width: 'device-width',
+      initialScale: 1,
+      maximumScale: 1,
+      userScalable: false
     }
   }
 }
@@ -74,13 +87,13 @@ export default async function RootLayout(
           fontSans.variable
         )}
       >
-        <NextTopLoader showSpinner={false} color='hsl(var(--foreground))' />
+        <NextTopLoader showSpinner={false} color="hsl(var(--foreground))" />
 
         <NextIntlClientProvider messages={messages}>
           <AppProvider>
             <ThemeProvider
-              attribute='class'
-              defaultTheme='system'
+              attribute="class"
+              defaultTheme="system"
               enableSystem
               disableTransitionOnChange
             >
@@ -88,7 +101,7 @@ export default async function RootLayout(
 
               {children}
 
-              {/* 👇 CHAT AI */}
+              {/* Chat AI */}
               <ChatBox />
 
               <Footer />
