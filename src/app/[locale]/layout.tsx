@@ -27,10 +27,6 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-/**
- * 🔥 FIX MOBILE KHÔNG CHO ZOOM
- * (KHÔNG ẢNH HƯỞNG ADMIN DESKTOP)
- */
 export async function generateMetadata(props: {
   params: Promise<{ locale: Locale }>
 }) {
@@ -46,14 +42,6 @@ export async function generateMetadata(props: {
     },
     openGraph: {
       ...baseOpenGraph
-    },
-
-    // 🔥 CHỈ FIX ZOOM (KHÔNG BÓ WIDTH)
-    viewport: {
-      width: 'device-width',
-      initialScale: 1,
-      maximumScale: 1,
-      userScalable: false
     }
   }
 }
@@ -81,6 +69,15 @@ export default async function RootLayout(
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      
+      {/* 🔥 KHÓA ZOOM CHẮC CHẮN */}
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+      </head>
+
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
