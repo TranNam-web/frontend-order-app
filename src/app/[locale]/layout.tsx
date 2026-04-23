@@ -19,7 +19,7 @@ import GoogleTag from '@/components/google-tag'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 
-// 👇 Chat AI
+// 👇 THÊM DÒNG NÀY
 import ChatBox from '@/components/ui/ChatBox'
 
 const fontSans = FontSans({
@@ -34,7 +34,6 @@ export async function generateMetadata(props: {
   const { locale } = params
 
   const t = await getTranslations({ locale, namespace: 'Brand' })
-
   return {
     title: {
       template: `%s | ${t('title')}`,
@@ -42,13 +41,6 @@ export async function generateMetadata(props: {
     },
     openGraph: {
       ...baseOpenGraph
-    },
-
-    // 🔥 FIX MOBILE VIEWPORT (ĐÚNG CHUẨN)
-    viewport: {
-      width: 'device-width',
-      initialScale: 1,
-      maximumScale: 1
     }
   }
 }
@@ -82,32 +74,28 @@ export default async function RootLayout(
           fontSans.variable
         )}
       >
-        {/* 🔥 KHÓA KHUNG MOBILE (FIX CO GIÃN) */}
-        <div className="w-full max-w-[420px] mx-auto min-h-screen overflow-x-hidden">
+        <NextTopLoader showSpinner={false} color='hsl(var(--foreground))' />
 
-          <NextTopLoader showSpinner={false} color="hsl(var(--foreground))" />
+        <NextIntlClientProvider messages={messages}>
+          <AppProvider>
+            <ThemeProvider
+              attribute='class'
+              defaultTheme='system'
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SnowEffect />
 
-          <NextIntlClientProvider messages={messages}>
-            <AppProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                <SnowEffect />
+              {children}
 
-                {children}
+              {/* 👇 CHAT AI */}
+              <ChatBox />
 
-                {/* Chat AI */}
-                <ChatBox />
-
-                <Footer />
-                <Toaster />
-              </ThemeProvider>
-            </AppProvider>
-          </NextIntlClientProvider>
-        </div>
+              <Footer />
+              <Toaster />
+            </ThemeProvider>
+          </AppProvider>
+        </NextIntlClientProvider>
 
         <GoogleTag />
       </body>
